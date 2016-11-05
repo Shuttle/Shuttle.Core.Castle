@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuttle.Core.Castle", "Shuttle.Core.Castle\Shuttle.Core.Castle.csproj", "{8F00B39E-5E6F-426B-8FF5-01BA4E3A4004}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{A0C3DED4-5C84-4207-861F-5ED5E17B56E3}"
+	ProjectSection(SolutionItems) = preProject
+		.build\package.msbuild = .build\package.msbuild
+		.build\package.nuspec = .build\package.nuspec
+		.build\Shuttle.Core.MSBuild.dll = .build\Shuttle.Core.MSBuild.dll
+		.build\Shuttle.Core.MSBuild.targets = .build\Shuttle.Core.MSBuild.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shuttle.Core.Castle.Tests", "Shuttle.Core.Castle.Tests\Shuttle.Core.Castle.Tests.csproj", "{6161C635-CDAF-4DB8-987D-1CD1F182A8B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F00B39E-5E6F-426B-8FF5-01BA4E3A4004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F00B39E-5E6F-426B-8FF5-01BA4E3A4004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F00B39E-5E6F-426B-8FF5-01BA4E3A4004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F00B39E-5E6F-426B-8FF5-01BA4E3A4004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6161C635-CDAF-4DB8-987D-1CD1F182A8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6161C635-CDAF-4DB8-987D-1CD1F182A8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6161C635-CDAF-4DB8-987D-1CD1F182A8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6161C635-CDAF-4DB8-987D-1CD1F182A8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
