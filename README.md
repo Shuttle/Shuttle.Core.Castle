@@ -8,4 +8,3 @@ The `WindsorComponentContainer` implements the `IComponentContainer` interface.
 var container = new WindsorComponentContainer(new WindsorContainer()
 ~~~
 
-The 

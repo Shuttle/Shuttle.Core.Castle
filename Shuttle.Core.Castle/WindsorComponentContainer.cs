@@ -96,5 +96,12 @@ namespace Shuttle.Core.Castle
 
             return this;
         }
+
+        public bool IsRegistered(Type serviceType)
+        {
+            Guard.AgainstNull(serviceType, "serviceType");
+
+            return _container.Kernel.HasComponent(serviceType);
+        }
     }
 }
