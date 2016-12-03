@@ -26,11 +26,7 @@ namespace Shuttle.Core.Castle
             {
                 return _container.Resolve(serviceType);
             }
-            catch (ComponentNotFoundException ex)
-            {
-                throw new TypeResolutionException(ex.Message, ex);
-            }
-            catch (HandlerException ex)
+            catch (Exception ex)
             {
                 throw new TypeResolutionException(ex.Message, ex);
             }
@@ -73,10 +69,11 @@ namespace Shuttle.Core.Castle
                         }
                 }
             }
-            catch (ComponentRegistrationException ex)
+            catch (Exception ex)
             {
                 throw new TypeRegistrationException(ex.Message, ex);
             }
+            
             return this;
         }
 

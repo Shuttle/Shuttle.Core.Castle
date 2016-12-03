@@ -5,6 +5,6 @@
 The `WindsorComponentContainer` implements the `IComponentContainer` interface.  
 
 ~~~c#
-var container = new WindsorComponentContainer(new WindsorContainer()
+var container = new WindsorComponentContainer(new WindsorContainer());
 ~~~
 

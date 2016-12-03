@@ -28,37 +28,6 @@ namespace Shuttle.Core.Castle.Tests
         }
 
         [Test]
-        public void Should_not_be_able_to_register_duplicate_types()
-        {
-            var container = new WindsorComponentContainer(new WindsorContainer());
-            var serviceType = typeof(IDoSomething);
-            var implementationType = typeof(DoSomething);
-
-            container.Register(serviceType, implementationType, Lifestyle.Singleton);
-
-            Assert.Throws<TypeRegistrationException>(() => container.Register(serviceType, implementationType, Lifestyle.Singleton));
-
-            Assert.NotNull(container.Resolve(serviceType));
-
-            Assert.Throws<TypeRegistrationException>(() => container.Register(serviceType, new DoSomething()));
-        }
-
-        [Test]
-        public void Should_not_be_able_to_register_duplicate_instances()
-        {
-            var container = new WindsorComponentContainer(new WindsorContainer());
-            var serviceType = typeof(IDoSomething);
-            var implementationType = typeof(DoSomething);
-
-            container.Register(serviceType, new DoSomething());
-
-            Assert.NotNull(container.Resolve(serviceType));
-
-            Assert.Throws<TypeRegistrationException>(() => container.Register(serviceType, implementationType, Lifestyle.Singleton));
-            Assert.Throws<TypeRegistrationException>(() => container.Register(serviceType, new DoSomething()));
-        }
-
-        [Test]
         public void Should_be_able_to_use_constructor_injection()
         {
             var container = new WindsorComponentContainer(new WindsorContainer());
