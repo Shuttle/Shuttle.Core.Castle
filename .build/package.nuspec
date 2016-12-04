@@ -9,9 +9,14 @@
 		<projectUrl>https://github.com/shuttle/Shuttle.Core.Castle</projectUrl>
 		<iconUrl>https://raw.githubusercontent.com/Shuttle/Shuttle.Core.Castle/master/.media/logo.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description></description>
+		<description>WindsorContainer implementation of the Shuttle.Core.Infrastructure.IComponentContainer interface.</description>
 		<releaseNotes/>
 		<copyright>Copyright (c) {year}, Eben Roux</copyright>
-		<tags>shuttle</tags>
-	</metadata>
+    <tags>Shuttle.Core Castle WindsorContainer</tags>
+    <dependencies>
+      <dependency id="Shuttle.Core.Infrastructure" version="{Shuttle.Core.Infrastructure-version}" />
+      <dependency id="Castle.Core" version="{Castle.Core-version}" />
+      <dependency id="Castle.Windsor" version="{Castle.Windsor-version}" />
+    </dependencies>
+  </metadata>
 </package>

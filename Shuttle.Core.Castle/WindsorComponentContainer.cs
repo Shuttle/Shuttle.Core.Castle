@@ -46,13 +46,6 @@ namespace Shuttle.Core.Castle
             {
                 switch (lifestyle)
                 {
-                    case Lifestyle.Thread:
-                        {
-                            _container.Register(
-                                Component.For(serviceType).ImplementedBy(implementationType).LifestylePerThread());
-
-                            break;
-                        }
                     case Lifestyle.Transient:
                         {
                             _container.Register(

@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 #if NET40FULL
@@ -30,6 +30,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Shuttle.Core")]
 [assembly: AssemblyCompany("Shuttle")]
 [assembly: AssemblyConfiguration("Release")]
-[assembly: AssemblyInformationalVersion("7.0.0")]
+[assembly: AssemblyInformationalVersion("1.0.0")]
 [assembly: ComVisible(false)]
 
