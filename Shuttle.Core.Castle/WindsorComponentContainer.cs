@@ -1,13 +1,12 @@
 ﻿using System;
 using Castle.MicroKernel;
-using Castle.MicroKernel.Handlers;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Shuttle.Core.Infrastructure;
 
 namespace Shuttle.Core.Castle
 {
-    public class WindsorComponentContainer : IComponentContainer
+    public class WindsorComponentContainer : IComponentRegistry, IComponentResolver
     {
         private readonly IWindsorContainer _container;
 
@@ -37,7 +36,7 @@ namespace Shuttle.Core.Castle
             return (T)Resolve(typeof(T));
         }
 
-        public IComponentContainer Register(Type serviceType, Type implementationType, Lifestyle lifestyle)
+        public IComponentRegistry Register(Type serviceType, Type implementationType, Lifestyle lifestyle)
         {
             Guard.AgainstNull(serviceType, "serviceType");
             Guard.AgainstNull(implementationType, "implementationType");
@@ -70,7 +69,7 @@ namespace Shuttle.Core.Castle
             return this;
         }
 
-        public IComponentContainer Register(Type serviceType, object instance)
+        public IComponentRegistry Register(Type serviceType, object instance)
         {
             Guard.AgainstNull(serviceType, "serviceType");
             Guard.AgainstNull(instance, "instance");
@@ -85,13 +84,6 @@ namespace Shuttle.Core.Castle
             }
 
             return this;
-        }
-
-        public bool IsRegistered(Type serviceType)
-        {
-            Guard.AgainstNull(serviceType, "serviceType");
-
-            return _container.Kernel.HasComponent(serviceType);
         }
     }
 }
