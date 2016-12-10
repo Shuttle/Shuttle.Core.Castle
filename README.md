@@ -2,7 +2,7 @@
 
 # WindsorComponentContainer
 
-The `WindsorComponentContainer` implements the `IComponentContainer` interface.  
+The `WindsorComponentContainer` implements both the `IComponentRegistry` and `IComponentResolver` interfaces.  
 
 ~~~c#
 var container = new WindsorComponentContainer(new WindsorContainer());
