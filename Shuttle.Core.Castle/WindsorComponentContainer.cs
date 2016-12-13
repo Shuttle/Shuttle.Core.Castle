@@ -31,11 +31,6 @@ namespace Shuttle.Core.Castle
             }
         }
 
-        public T Resolve<T>() where T : class
-        {
-            return (T)Resolve(typeof(T));
-        }
-
         public IComponentRegistry Register(Type serviceType, Type implementationType, Lifestyle lifestyle)
         {
             Guard.AgainstNull(serviceType, "serviceType");
@@ -78,7 +73,7 @@ namespace Shuttle.Core.Castle
             {
                 _container.Register(Component.For(serviceType).Instance(instance));
             }
-            catch (ComponentRegistrationException ex)
+            catch (Exception ex)
             {
                 throw new TypeRegistrationException(ex.Message, ex);
             }

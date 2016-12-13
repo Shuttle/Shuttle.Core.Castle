@@ -9,7 +9,7 @@
 		<projectUrl>https://github.com/shuttle/Shuttle.Core.Castle</projectUrl>
 		<iconUrl>https://raw.githubusercontent.com/Shuttle/Shuttle.Core.Castle/master/.media/logo.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>WindsorContainer implementation of the Shuttle.Core.Infrastructure.IComponentContainer interface.</description>
+		<description>WindsorContainer implementation of the Shuttle.Core.Infrastructure dependency injection interfaces.</description>
 		<releaseNotes/>
 		<copyright>Copyright (c) {year}, Eben Roux</copyright>
     <tags>Shuttle.Core Castle WindsorContainer</tags>
