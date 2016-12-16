@@ -122,20 +122,6 @@ namespace Shuttle.Core.Castle
             }
         }
 
-        public object Resolve(string name, Type serviceType)
-        {
-            Guard.AgainstNull(serviceType, "serviceType");
-
-            try
-            {
-                return _container.Resolve(name, serviceType);
-            }
-            catch (Exception ex)
-            {
-                throw new TypeResolutionException(ex.Message, ex);
-            }
-        }
-
         public IEnumerable<object> ResolveAll(Type serviceType)
         {
             Guard.AgainstNull(serviceType, "serviceType");
