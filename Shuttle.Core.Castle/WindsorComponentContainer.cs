@@ -7,7 +7,7 @@ using Shuttle.Core.Infrastructure;
 
 namespace Shuttle.Core.Castle
 {
-    public class WindsorComponentContainer : IComponentRegistry, IComponentResolver
+    public class WindsorComponentContainer : ComponentRegistry, IComponentResolver
     {
         private readonly IWindsorContainer _container;
 
@@ -18,11 +18,13 @@ namespace Shuttle.Core.Castle
             _container = container;
         }
 
-        public IComponentRegistry Register(Type serviceType, Type implementationType, Lifestyle lifestyle)
+        public override IComponentRegistry Register(Type dependencyType, Type implementationType, Lifestyle lifestyle)
         {
-            Guard.AgainstNull(serviceType, "serviceType");
+            Guard.AgainstNull(dependencyType, "dependencyType");
             Guard.AgainstNull(implementationType, "implementationType");
 
+	        base.Register(dependencyType, implementationType, lifestyle);
+
             try
             {
                 switch (lifestyle)
@@ -30,14 +32,14 @@ namespace Shuttle.Core.Castle
                     case Lifestyle.Transient:
                     {
                         _container.Register(
-                            Component.For(serviceType).ImplementedBy(implementationType).LifestyleTransient());
+                            Component.For(dependencyType).ImplementedBy(implementationType).LifestyleTransient());
 
                         break;
                     }
                     default:
                     {
                         _container.Register(
-                            Component.For(serviceType).ImplementedBy(implementationType).LifestyleSingleton());
+                            Component.For(dependencyType).ImplementedBy(implementationType).LifestyleSingleton());
 
                         break;
                     }
@@ -51,11 +53,13 @@ namespace Shuttle.Core.Castle
             return this;
         }
 
-        public IComponentRegistry RegisterCollection(Type serviceType, IEnumerable<Type> implementationTypes,
+        public override IComponentRegistry RegisterCollection(Type dependencyType, IEnumerable<Type> implementationTypes,
             Lifestyle lifestyle)
         {
-            Guard.AgainstNull(serviceType, "serviceType");
+            Guard.AgainstNull(dependencyType, "dependencyType");
             Guard.AgainstNull(implementationTypes, "implementationTypes");
+
+	        base.RegisterCollection(dependencyType, implementationTypes, lifestyle);
 
             try
             {
@@ -66,7 +70,7 @@ namespace Shuttle.Core.Castle
                         foreach (var implementationType in implementationTypes)
                         {
                             _container.Register(
-                                Component.For(serviceType).ImplementedBy(implementationType).LifestyleTransient());
+                                Component.For(dependencyType).ImplementedBy(implementationType).LifestyleTransient());
                         }
 
                         break;
@@ -76,7 +80,7 @@ namespace Shuttle.Core.Castle
                         foreach (var implementationType in implementationTypes)
                         {
                             _container.Register(
-                                Component.For(serviceType).ImplementedBy(implementationType).LifestyleSingleton());
+                                Component.For(dependencyType).ImplementedBy(implementationType).LifestyleSingleton());
                         }
 
                         break;
@@ -91,14 +95,16 @@ namespace Shuttle.Core.Castle
             return this;
         }
 
-        public IComponentRegistry Register(Type serviceType, object instance)
+        public override IComponentRegistry Register(Type dependencyType, object instance)
         {
-            Guard.AgainstNull(serviceType, "serviceType");
+            Guard.AgainstNull(dependencyType, "dependencyType");
             Guard.AgainstNull(instance, "instance");
+
+	        base.Register(dependencyType, instance);
 
             try
             {
-                _container.Register(Component.For(serviceType).Instance(instance));
+                _container.Register(Component.For(dependencyType).Instance(instance));
             }
             catch (Exception ex)
             {
@@ -108,13 +114,13 @@ namespace Shuttle.Core.Castle
             return this;
         }
 
-        public object Resolve(Type serviceType)
+        public object Resolve(Type dependencyType)
         {
-            Guard.AgainstNull(serviceType, "serviceType");
+            Guard.AgainstNull(dependencyType, "dependencyType");
 
             try
             {
-                return _container.Resolve(serviceType);
+                return _container.Resolve(dependencyType);
             }
             catch (Exception ex)
             {
@@ -122,13 +128,13 @@ namespace Shuttle.Core.Castle
             }
         }
 
-        public IEnumerable<object> ResolveAll(Type serviceType)
+        public IEnumerable<object> ResolveAll(Type dependencyType)
         {
-            Guard.AgainstNull(serviceType, "serviceType");
+            Guard.AgainstNull(dependencyType, "dependencyType");
 
             try
             {
-                return _container.ResolveAll(serviceType).Cast<object>();
+                return _container.ResolveAll(dependencyType).Cast<object>();
             }
             catch (Exception ex)
             {
