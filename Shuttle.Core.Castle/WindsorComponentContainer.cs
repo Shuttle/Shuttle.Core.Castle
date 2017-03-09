@@ -7,139 +7,153 @@ using Shuttle.Core.Infrastructure;
 
 namespace Shuttle.Core.Castle
 {
-    public class WindsorComponentContainer : ComponentRegistry, IComponentResolver
-    {
-        private readonly IWindsorContainer _container;
+	public class WindsorComponentContainer : ComponentRegistry, IComponentResolver
+	{
+		private readonly IWindsorContainer _container;
 
-        public WindsorComponentContainer(IWindsorContainer container)
-        {
-            Guard.AgainstNull(container, "container");
+		public WindsorComponentContainer(IWindsorContainer container)
+		{
+			Guard.AgainstNull(container, "container");
 
-            _container = container;
-        }
+			_container = container;
+		}
 
-        public override IComponentRegistry Register(Type dependencyType, Type implementationType, Lifestyle lifestyle)
-        {
-            Guard.AgainstNull(dependencyType, "dependencyType");
-            Guard.AgainstNull(implementationType, "implementationType");
+		public object Resolve(Type dependencyType)
+		{
+			Guard.AgainstNull(dependencyType, "dependencyType");
 
-	        base.Register(dependencyType, implementationType, lifestyle);
+			try
+			{
+				return _container.Resolve(dependencyType);
+			}
+			catch (Exception ex)
+			{
+				throw new TypeResolutionException(ex.Message, ex);
+			}
+		}
 
-            try
-            {
-                switch (lifestyle)
-                {
-                    case Lifestyle.Transient:
-                    {
-                        _container.Register(
-                            Component.For(dependencyType).ImplementedBy(implementationType).LifestyleTransient());
+		public IEnumerable<object> ResolveAll(Type dependencyType)
+		{
+			Guard.AgainstNull(dependencyType, "dependencyType");
 
-                        break;
-                    }
-                    default:
-                    {
-                        _container.Register(
-                            Component.For(dependencyType).ImplementedBy(implementationType).LifestyleSingleton());
+			try
+			{
+				return _container.ResolveAll(dependencyType).Cast<object>();
+			}
+			catch (Exception ex)
+			{
+				throw new TypeResolutionException(ex.Message, ex);
+			}
+		}
 
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new TypeRegistrationException(ex.Message, ex);
-            }
+		public override IComponentRegistry Register(Type dependencyType, Type implementationType, Lifestyle lifestyle)
+		{
+			Guard.AgainstNull(dependencyType, "dependencyType");
+			Guard.AgainstNull(implementationType, "implementationType");
 
-            return this;
-        }
+			base.Register(dependencyType, implementationType, lifestyle);
 
-        public override IComponentRegistry RegisterCollection(Type dependencyType, IEnumerable<Type> implementationTypes,
-            Lifestyle lifestyle)
-        {
-            Guard.AgainstNull(dependencyType, "dependencyType");
-            Guard.AgainstNull(implementationTypes, "implementationTypes");
+			try
+			{
+				switch (lifestyle)
+				{
+					case Lifestyle.Transient:
+					{
+						_container.Register(
+							Component.For(dependencyType)
+								.ImplementedBy(implementationType)
+								.Named(dependencyType.FullName)
+								.LifestyleTransient());
 
-	        base.RegisterCollection(dependencyType, implementationTypes, lifestyle);
+						break;
+					}
+					default:
+					{
+						_container.Register(
+							Component.For(dependencyType)
+								.ImplementedBy(implementationType)
+								.Named(dependencyType.FullName)
+								.LifestyleSingleton());
 
-            try
-            {
-                switch (lifestyle)
-                {
-                    case Lifestyle.Transient:
-                    {
-                        foreach (var implementationType in implementationTypes)
-                        {
-                            _container.Register(
-                                Component.For(dependencyType).ImplementedBy(implementationType).LifestyleTransient());
-                        }
+						break;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new TypeRegistrationException(ex.Message, ex);
+			}
 
-                        break;
-                    }
-                    default:
-                    {
-                        foreach (var implementationType in implementationTypes)
-                        {
-                            _container.Register(
-                                Component.For(dependencyType).ImplementedBy(implementationType).LifestyleSingleton());
-                        }
+			return this;
+		}
 
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new TypeRegistrationException(ex.Message, ex);
-            }
+		public override IComponentRegistry RegisterCollection(Type dependencyType, IEnumerable<Type> implementationTypes,
+			Lifestyle lifestyle)
+		{
+			Guard.AgainstNull(dependencyType, "dependencyType");
+			Guard.AgainstNull(implementationTypes, "implementationTypes");
 
-            return this;
-        }
+			base.RegisterCollection(dependencyType, implementationTypes, lifestyle);
 
-        public override IComponentRegistry Register(Type dependencyType, object instance)
-        {
-            Guard.AgainstNull(dependencyType, "dependencyType");
-            Guard.AgainstNull(instance, "instance");
+			try
+			{
+				switch (lifestyle)
+				{
+					case Lifestyle.Transient:
+					{
+						foreach (var implementationType in implementationTypes)
+						{
+							_container.Register(
+								Component.For(dependencyType)
+									.ImplementedBy(implementationType)
+									.Named(string.Format("{0}/{1}", dependencyType.FullName, implementationType.FullName))
+									.LifestyleTransient());
+						}
 
-	        base.Register(dependencyType, instance);
+						break;
+					}
+					default:
+					{
+						foreach (var implementationType in implementationTypes)
+						{
+							_container.Register(
+								Component.For(dependencyType)
+									.ImplementedBy(implementationType)
+									.Named(string.Format("{0}/{1}", dependencyType.FullName, implementationType.FullName))
+									.LifestyleSingleton());
+						}
 
-            try
-            {
-                _container.Register(Component.For(dependencyType).Instance(instance));
-            }
-            catch (Exception ex)
-            {
-                throw new TypeRegistrationException(ex.Message, ex);
-            }
+						break;
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				throw new TypeRegistrationException(ex.Message, ex);
+			}
 
-            return this;
-        }
+			return this;
+		}
 
-        public object Resolve(Type dependencyType)
-        {
-            Guard.AgainstNull(dependencyType, "dependencyType");
+		public override IComponentRegistry Register(Type dependencyType, object instance)
+		{
+			Guard.AgainstNull(dependencyType, "dependencyType");
+			Guard.AgainstNull(instance, "instance");
 
-            try
-            {
-                return _container.Resolve(dependencyType);
-            }
-            catch (Exception ex)
-            {
-                throw new TypeResolutionException(ex.Message, ex);
-            }
-        }
+			base.Register(dependencyType, instance);
 
-        public IEnumerable<object> ResolveAll(Type dependencyType)
-        {
-            Guard.AgainstNull(dependencyType, "dependencyType");
+			try
+			{
+				_container.Register(Component.For(dependencyType)
+					.Instance(instance)
+					.Named(dependencyType.FullName));
+			}
+			catch (Exception ex)
+			{
+				throw new TypeRegistrationException(ex.Message, ex);
+			}
 
-            try
-            {
-                return _container.ResolveAll(dependencyType).Cast<object>();
-            }
-            catch (Exception ex)
-            {
-                throw new TypeResolutionException(ex.Message, ex);
-            }
-        }
-    }
+			return this;
+		}
+	}
 }
