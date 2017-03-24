@@ -51,6 +51,5 @@ namespace Shuttle.Core.Castle.Tests
 			RegisterMultipleTransient(container);
 			ResolveMultipleTransient(container);
 		}
-
 	}
 }
