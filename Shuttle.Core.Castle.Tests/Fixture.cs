@@ -1,11 +1,11 @@
 ﻿using Castle.Windsor;
 using NUnit.Framework;
-using Shuttle.Core.ComponentContainer.Tests;
+using Shuttle.Core.Container.Tests;
 
 namespace Shuttle.Core.Castle.Tests
 {
     [TestFixture]
-    public class WindsorComponentContainerFixture : ComponentContainerFixture
+    public class Fixture : ContainerFixture
     {
         [Test]
         public void Should_be_able_resolve_all_instances()

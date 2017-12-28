@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
-using Shuttle.Core.Infrastructure;
+using Shuttle.Core.Container;
+using Shuttle.Core.Contract;
 
 namespace Shuttle.Core.Castle
 {
@@ -13,14 +14,14 @@ namespace Shuttle.Core.Castle
 
 		public WindsorComponentContainer(IWindsorContainer container)
 		{
-			Guard.AgainstNull(container, "container");
+			Guard.AgainstNull(container, nameof(container));
 
 			_container = container;
 		}
 
 		public object Resolve(Type dependencyType)
 		{
-			Guard.AgainstNull(dependencyType, "dependencyType");
+			Guard.AgainstNull(dependencyType, nameof(dependencyType));
 
 			try
 			{
@@ -34,7 +35,7 @@ namespace Shuttle.Core.Castle
 
 		public IEnumerable<object> ResolveAll(Type dependencyType)
 		{
-			Guard.AgainstNull(dependencyType, "dependencyType");
+			Guard.AgainstNull(dependencyType, nameof(dependencyType));
 
 			try
 			{
@@ -48,8 +49,8 @@ namespace Shuttle.Core.Castle
 
 		public override IComponentRegistry Register(Type dependencyType, Type implementationType, Lifestyle lifestyle)
 		{
-			Guard.AgainstNull(dependencyType, "dependencyType");
-			Guard.AgainstNull(implementationType, "implementationType");
+			Guard.AgainstNull(dependencyType, nameof(dependencyType));
+			Guard.AgainstNull(implementationType, nameof(implementationType));
 
 			base.Register(dependencyType, implementationType, lifestyle);
 
@@ -90,8 +91,8 @@ namespace Shuttle.Core.Castle
 		public override IComponentRegistry RegisterCollection(Type dependencyType, IEnumerable<Type> implementationTypes,
 			Lifestyle lifestyle)
 		{
-			Guard.AgainstNull(dependencyType, "dependencyType");
-			Guard.AgainstNull(implementationTypes, "implementationTypes");
+			Guard.AgainstNull(dependencyType, nameof(dependencyType));
+			Guard.AgainstNull(implementationTypes, nameof(implementationTypes));
 
 			base.RegisterCollection(dependencyType, implementationTypes, lifestyle);
 
@@ -119,7 +120,7 @@ namespace Shuttle.Core.Castle
 							_container.Register(
 								Component.For(dependencyType)
 									.ImplementedBy(implementationType)
-									.Named(string.Format("{0}/{1}", dependencyType.FullName, implementationType.FullName))
+									.Named($"{dependencyType.FullName}/{implementationType.FullName}")
 									.LifestyleSingleton());
 						}
 
@@ -137,8 +138,8 @@ namespace Shuttle.Core.Castle
 
 		public override IComponentRegistry Register(Type dependencyType, object instance)
 		{
-			Guard.AgainstNull(dependencyType, "dependencyType");
-			Guard.AgainstNull(instance, "instance");
+			Guard.AgainstNull(dependencyType, nameof(dependencyType));
+			Guard.AgainstNull(instance, nameof(instance));
 
 			base.Register(dependencyType, instance);
 
