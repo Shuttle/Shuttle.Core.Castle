@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Castle.MicroKernel.Registration;
+using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.Windsor;
 using Shuttle.Core.Container;
 using Shuttle.Core.Contract;
@@ -15,6 +16,8 @@ namespace Shuttle.Core.Castle
 		public WindsorComponentContainer(IWindsorContainer container)
 		{
 			Guard.AgainstNull(container, nameof(container));
+
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
 
 			_container = container;
 		}
@@ -107,7 +110,7 @@ namespace Shuttle.Core.Castle
 							_container.Register(
 								Component.For(dependencyType)
 									.ImplementedBy(implementationType)
-									.Named(string.Format("{0}/{1}", dependencyType.FullName, implementationType.FullName))
+									.Named($"{dependencyType.FullName}/{implementationType.FullName}")
 									.LifestyleTransient());
 						}
 
