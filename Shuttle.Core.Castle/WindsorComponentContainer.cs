@@ -17,9 +17,12 @@ namespace Shuttle.Core.Castle
 		{
 			Guard.AgainstNull(container, nameof(container));
 
-            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
+		    if (!container.HasResolver<CollectionResolver>())
+		    {
+		        container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
+		    }
 
-			_container = container;
+		    _container = container;
 		}
 
 		public object Resolve(Type dependencyType)
