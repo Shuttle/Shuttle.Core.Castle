@@ -94,7 +94,14 @@ namespace Shuttle.Core.Castle
 			return this;
 		}
 
-		public override IComponentRegistry RegisterCollection(Type dependencyType, IEnumerable<Type> implementationTypes,
+	    public override IComponentRegistry RegisterOpen(Type dependencyType, Type implementationType, Lifestyle lifestyle)
+	    {
+	        Register(dependencyType, implementationType, lifestyle);
+
+	        return this;
+	    }
+
+	    public override IComponentRegistry RegisterCollection(Type dependencyType, IEnumerable<Type> implementationTypes,
 			Lifestyle lifestyle)
 		{
 			Guard.AgainstNull(dependencyType, nameof(dependencyType));
@@ -142,12 +149,12 @@ namespace Shuttle.Core.Castle
 			return this;
 		}
 
-		public override IComponentRegistry Register(Type dependencyType, object instance)
+		public override IComponentRegistry RegisterInstance(Type dependencyType, object instance)
 		{
 			Guard.AgainstNull(dependencyType, nameof(dependencyType));
 			Guard.AgainstNull(instance, nameof(instance));
 
-			base.Register(dependencyType, instance);
+			base.RegisterInstance(dependencyType, instance);
 
 			try
 			{

@@ -34,6 +34,24 @@ namespace Shuttle.Core.Castle.Tests
             ResolveTransient(container);
         }
 
+        [Test]
+        public void Should_be_able_to_register_and_resolve_an_open_generic_singleton()
+        {
+            var container = new WindsorComponentContainer(new WindsorContainer());
+
+            RegisterSingletonOpen(container);
+            ResolveSingletonOpen(container);
+        }
+
+        [Test]
+        public void Should_be_able_to_register_and_resolve_open_generic_transient_components()
+        {
+            var container = new WindsorComponentContainer(new WindsorContainer());
+
+            RegisterTransientOpen(container);
+            ResolveTransientOpen(container);
+        }
+
 		[Test]
 		public void Should_be_able_to_register_and_resolve_a_multiple_singleton()
 		{
