@@ -39,8 +39,8 @@ namespace Shuttle.Core.Castle.Tests
         {
             var container = new WindsorComponentContainer(new WindsorContainer());
 
-            RegisterSingletonOpen(container);
-            ResolveSingletonOpen(container);
+            RegisterSingletonGeneric(container);
+            ResolveSingletonGeneric(container);
         }
 
         [Test]
@@ -48,8 +48,8 @@ namespace Shuttle.Core.Castle.Tests
         {
             var container = new WindsorComponentContainer(new WindsorContainer());
 
-            RegisterTransientOpen(container);
-            ResolveTransientOpen(container);
+            RegisterTransientGeneric(container);
+            ResolveTransientGeneric(container);
         }
 
 		[Test]
