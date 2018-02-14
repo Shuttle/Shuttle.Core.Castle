@@ -1,7 +1,7 @@
 # Shuttle.Core.Castle
 
 ```
-PM> Install-Package Shuttle.Core.Autofac
+PM> Install-Package Shuttle.Core.Castle
 ```
 
 The `WindsorComponentContainer` implements both the `IComponentRegistry` and `IComponentResolver` interfaces.  
