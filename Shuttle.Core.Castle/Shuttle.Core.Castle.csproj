@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Castle.Windsor" Version="5.1.0" />
-    <PackageReference Include="Shuttle.Core.Container" Version="11.2.1" />
+    <PackageReference Include="Castle.Windsor" Version="5.1.1" />
+    <PackageReference Include="Shuttle.Core.Container" Version="11.2.3" />
   </ItemGroup>
 
   <ItemGroup>
