@@ -23,6 +23,9 @@ namespace Shuttle.Core.Castle
 		    }
 
 		    _container = container;
+
+		    this.AttemptRegisterInstance<IComponentRegistry>(this);
+		    this.AttemptRegisterInstance<IComponentResolver>(this);
 		}
 
 		public object Resolve(Type dependencyType)
